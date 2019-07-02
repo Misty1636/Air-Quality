@@ -1,0 +1,448 @@
+@import "variables";
+@import "function";
+@import "mixin";
+@import "spacing";
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap");
+
+$dark: #121212 !default;
+$white: #ffffff !default;
+$success: #95f084 !default;
+$bright: #ffe695 !default;
+$warning: #ffaf6a !default;
+$danger: #ff5757 !default;
+$magic: #9777ff !default;
+$steady: #ad1774 !default;
+$light: #f0f0f0 !default;
+
+$font-base: 1rem;
+$font-s: $font-base * 1.25;
+$font-m: $font-base * 1.5;
+$font-l: $font-base * 2.25;
+$font-xl: $font-base * 2.5;
+$font-2xl: $font-base * 3;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.5;
+  color: $dark;
+  font-weight: bold;
+  background: $light;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$gutters;
+  margin-left: -$gutters;
+}
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+  > .col,
+  > [ckass*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+@include make-grid-col();
+
+.container {
+  max-width: 1170px;
+  padding-right: $gutters;
+  padding-left: $gutters;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.footer {
+  background: $dark;
+  padding: 0.5rem 0;
+  color: $white;
+  font-weight: normal;
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    &__text {
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+.aqi {
+  min-height: calc(100vh - 40px);
+  &__title {
+    font-size: $font-xl;
+    letter-spacing: 0.3px;
+    line-height: 1;
+  }
+  &__selects {
+    position: relative;
+    &:before,
+    &:after {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      right: 16px;
+      border-width: 0px 4px 7px;
+      border-style: solid;
+      border-color: transparent transparent $dark;
+    }
+    &:before {
+      bottom: 55%;
+    }
+    &:after {
+      top: 55%;
+      transform: rotateZ(180deg);
+    }
+  }
+  &__select {
+    border: 2px solid $dark;
+    width: 100%;
+    outline: 0;
+    appearance: none;
+    letter-spacing: 1px;
+  }
+  &__standard {
+    height: 100%;
+    line-height: 1.4;
+    &:nth-child(1) {
+      .aqi__standard {
+        &__num,
+        &__status {
+          border-left: 3px solid $dark;
+        }
+      }
+    }
+    &__num,
+    &__status {
+      height: 50%;
+      border: 3px solid $dark;
+      border-left: none;
+      text-align: center;
+      display: grid;
+      place-items: center;
+    }
+    &__status {
+      background: $white;
+      span {
+        width: 80%;
+      }
+    }
+    &__num {
+      border-bottom: none;
+      &--lv1 {
+        background: $success;
+      }
+      &--lv2 {
+        background: $bright;
+      }
+      &--lv3 {
+        background: $warning;
+      }
+      &--lv4 {
+        background: $danger;
+      }
+      &--lv5 {
+        background: $magic;
+      }
+      &--lv6 {
+        background: $steady;
+      }
+      &--NA {
+        background: $light;
+      }
+    }
+  }
+  &__currentCity {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    &__title {
+      font-size: $font-l;
+    }
+    &__hr {
+      flex: auto;
+    }
+  }
+  &__currentZone {
+    &__title,
+    &__status,
+    &__titleSmall {
+      text-align: center;
+      border: 3px solid $dark;
+      line-height: 1;
+    }
+    &__title,
+    &__titleSmall {
+      border-right: none;
+      background: $white;
+    }
+    &__title {
+      font-size: $font-xl;
+    }
+    &__titleSmall {
+      font-size: $font-l * 0.8;
+      display: grid;
+      place-items: center;
+    }
+    &__status {
+      font-size: $font-2xl;
+    }
+    &__gass {
+      background: $white;
+      border: 3px solid $dark;
+      border-top: none;
+    }
+    &__gas {
+      list-style: none;
+      > li {
+        display: flex;
+        padding: 1.5rem 0;
+        align-items: flex-end;
+        line-height: 1;
+        &:nth-child(n + 2) {
+          border-top: 1px solid $dark;
+        }
+      }
+      b {
+        font-size: $font-m;
+      }
+      span {
+        font-weight: normal;
+        padding-bottom: 2px;
+      }
+    }
+  }
+  &__zoneList {
+    border: 3px solid $dark;
+    display: flex;
+    line-height: 1;
+    min-height: 86px;
+    cursor: pointer;
+    transition: all 0.5s;
+    background: $white;
+    &:hover {
+      box-shadow: 0 0 15px rgba($dark, 0.5);
+    }
+    &--active {
+      background: lighten($bright, 17%) !important;
+    }
+    &__title,
+    &__titleSmall,
+    &__num {
+      display: grid;
+      place-items: center;
+    }
+    &__title,
+    &__titleSmall {
+      flex: 0 0 55%;
+    }
+    &__title {
+      font-size: $font-xl;
+    }
+    &__titleSmall {
+      font-size: $font-l;
+    }
+    &__num {
+      font-size: $font-2xl;
+      flex: 0 0 45%;
+      border-left: 3px solid $dark;
+    }
+  }
+}
+
+// 開場動畫 --------------------------------------------------------------------------------------------------------------------------------------------------------
+$rainbow: conic-gradient(
+  #9ed110,
+  #50b517,
+  #179067,
+  #476eaf,
+  #9f49ac,
+  #cc42a2,
+  #ff3ba7,
+  #ff5800,
+  #ff8100,
+  #feac00,
+  #ffcc00,
+  #ede604
+);
+$shadow: ();
+@for $i from 1 through 300 {
+  $x: random(1920);
+  $y: random(1000);
+  $a: random(3) * 0.1 + 0.7;
+  $shadow: $shadow, ($x * 1px $y * 1px rgba($white, $a)) !global;
+}
+.loading {
+  position: absolute;
+  background: $dark;
+  width: 100%;
+  height: 100vh;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  overflow: hidden;
+  &__outer {
+    animation: rotate2 1.5s linear infinite;
+    perspective: 500px;
+  }
+  &__inner {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: $rainbow;
+    animation: rotate 3s linear infinite;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      filter: blur(25px);
+      background: $rainbow;
+    }
+    &:after {
+      filter: blur(60px);
+    }
+  }
+  &__mark {
+    $s: 1.25rem;
+    position: absolute;
+    z-index: 10;
+    border-radius: 50%;
+    background: $dark;
+    left: $s;
+    right: $s;
+    top: $s;
+    bottom: $s;
+  }
+  &__stars {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &__star {
+    position: absolute;
+    z-index: -1;
+    width: 1px;
+    height: 1px;
+    border-radius: 50%;
+    box-shadow: $shadow;
+    background: transparent;
+    @for $i from 1 through 5 {
+      $s: $i - 1;
+      &:nth-child(#{$i}) {
+        transform: rotate($s * 72deg);
+        animation: stars#{$i} 20s linear infinite;
+      }
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate3D(1, 0, 0, 15deg);
+  }
+
+  12% {
+    transform: rotate3D(1, 1, 0, 15deg);
+  }
+
+  25% {
+    transform: rotate3D(0, 1, 0, 15deg);
+  }
+
+  37% {
+    transform: rotate3D(-1, 1, 0, 15deg);
+  }
+
+  50% {
+    transform: rotate3D(-1, 0, 0, 15deg);
+  }
+
+  62% {
+    transform: rotate3D(-1, -1, 0, 15deg);
+  }
+
+  75% {
+    transform: rotate3D(0, -1, 0, 15deg);
+  }
+
+  87% {
+    transform: rotate3D(1, -1, 0, 15deg);
+  }
+
+  100% {
+    transform: rotate3D(1, 0, 0, 15deg);
+  }
+}
+
+@keyframes rotate2 {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes stars1 {
+  from {
+    transform: rotateZ(1 * 72deg);
+  }
+  to {
+    transform: rotateZ(360deg + 1 * 72deg);
+  }
+}
+
+@keyframes stars2 {
+  from {
+    transform: rotateZ(2 * 72deg);
+  }
+  to {
+    transform: rotateZ(360deg + 2 * 72deg);
+  }
+}
+
+@keyframes stars3 {
+  from {
+    transform: rotateZ(3 * 72deg);
+  }
+  to {
+    transform: rotateZ(360deg + 3 * 72deg);
+  }
+}
+
+@keyframes stars4 {
+  from {
+    transform: rotateZ(4 * 72deg);
+  }
+  to {
+    transform: rotateZ(360deg + 4 * 72deg);
+  }
+}
+
+@keyframes stars5 {
+  from {
+    transform: rotateZ(5 * 72deg);
+  }
+  to {
+    transform: rotateZ(360deg + 5 * 72deg);
+  }
+}
