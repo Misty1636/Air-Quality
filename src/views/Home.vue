@@ -15,7 +15,7 @@
         .col-4
           h1.aqi__title.h-mb-3 空氣品質指標 (AQI)
           .aqi__selects
-            select.aqi__select.h-p-3(v-model="$store.state.Countys")
+            select.aqi__select.h-p-3(v-model="Countys")
               option(value="請選擇地區" disabled) 請選擇地區
               option(:value="County" v-for="County in getCounty" :key="County") {{County}}
         .col-8
@@ -93,7 +93,7 @@
                     b.h-ml-auto {{currentZone.NO2 | getNum}}
         .col-8
           .row
-            .col-6.h-mb-5(v-for="item in getCurrentCounty" :key="item.SiteName" @click="GETCURRENTZONE(item)")
+            .col-6.h-mb-5(v-for="item in getCurrentCounty" :key="item.SiteName" @click="getCurrentZone(item)")
               .aqi__zoneList(:class="{'aqi__zoneList--active': currentZone.SiteName === item.SiteName}")
                 h4(:class="{'aqi__zoneList__title' : item.SiteName.length < 3,'aqi__zoneList__titleSmall' : item.SiteName.length > 2}") {{item.SiteName}}
                 span.aqi__zoneList__num(:class="item.Status | getColor") {{item.AQI | getNum}}
